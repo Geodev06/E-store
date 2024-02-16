@@ -1,0 +1,2 @@
+<link href="https://cdn.datatables.net/v/bs5/dt-1.13.10/b-2.4.2/date-1.5.1/r-2.5.0/rg-1.4.1/sc-2.3.0/sp-2.2.0/datatables.min.css" rel="stylesheet">
+<script src="https://cdn.datatables.net/v/bs5/dt-1.13.10/b-2.4.2/date-1.5.1/r-2.5.0/rg-1.4.1/sc-2.3.0/sp-2.2.0/datatables.min.js"></script>
