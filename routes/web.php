@@ -60,7 +60,9 @@ Route::controller(Product_controller::class)->group(function () {
     Route::get('product-item', 'index')->name('product')->middleware(['auth','check_admin']);
     Route::get('product-product/table', 'product_table')->name('product_table')->middleware(['auth','check_admin']);
     Route::post('product-item/save', 'store')->name('product.store')->middleware(['auth','check_admin']);
-
+    Route::get('product-item-get/{id}', 'get')->name('product.get')->middleware(['auth','check_admin']);
+    Route::post('product-item-update/{id}', 'update')->name('product.update')->middleware(['auth','check_admin']);
+    Route::delete('product-item-delete/{id}', 'delete')->name('product.delete')->middleware(['auth','check_admin']);
 
 });
 

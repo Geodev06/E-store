@@ -15,7 +15,11 @@
      }
  </style>
 
+
  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+ <link href="https://cdn.jsdelivr.net/npm/labelauty@1.1.3/source/jquery-labelauty.min.css" rel="stylesheet">
+ <script src="https://cdn.jsdelivr.net/npm/labelauty@1.1.3/source/jquery-labelauty.min.js"></script>
+
  <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
  <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
  <link rel="stylesheet" href="{{ asset('iztoast/css/iziToast.min.css') }}">
@@ -23,6 +27,12 @@
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css" integrity="sha512-pTaEn+6gF1IeWv3W1+7X7eM60TFu/agjgoHmYhAfLEU8Phuf6JKiiE8YmsNC0aCgQv4192s4Vai8YZ6VNM6vyQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
  <script>
+    
+
+    $(document).ready(function() {
+         $('input[type="radio"]').labelauty();
+     })
+
      function showToast(msg, type) {
 
          var Bg = ''
