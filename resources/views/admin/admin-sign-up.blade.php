@@ -2,13 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-    <title>
-        {{ 'System title'}}
-    </title>
+    @include('partials.meta')
     @include('partials.head')
 </head>
 
@@ -89,7 +83,7 @@
                 function beforeSend() {
                     $('.label_error').text('')
                     $('#btn-submit').text('Loading...')
-                    $('#btn-submit').attr('disabled','disabled')
+                    $('#btn-submit').attr('disabled', 'disabled')
 
                 }
 
@@ -103,7 +97,7 @@
                     }
 
                     if (response.status === 200) {
-                       
+
                         showToast(response.message, 1)
 
                         setTimeout(function() {

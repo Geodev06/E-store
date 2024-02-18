@@ -26,7 +26,7 @@ class Product_controller extends Controller
         $rules = [
             'name' => 'required|string|min:3|max:255|unique:products',
             'description' => 'required|max:2000',
-            'category_ids' => 'required|max:5|min:1',
+            'category_ids' => 'required',
             'price' => 'required|double_with_decimal_places',
             'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Example: Allow only image files (jpg, png, gif) with a maximum size of 2MB
             'file' => 'required|mimes:pdf',
@@ -149,7 +149,7 @@ class Product_controller extends Controller
         $rules = [
             'name' => ['required', 'string', 'min:3', 'max:255', Rule::unique('products')->ignore($id)],
             'description' => 'required|max:2000',
-            'category_ids' => 'required|array|min:1|max:5', // Ensure it's an array with at least 1 item and at most 5 items
+            'category_ids' => 'required', // Ensure it's an array with at least 1 item and at most 5 items
             'price' => 'required|numeric', // Use "numeric" for double values, assuming you want to allow integers as well
             'photo' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Example: Allow only image files (jpg, png, gif) with a maximum size of 2MB
             'file' => 'mimes:pdf',

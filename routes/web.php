@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin_auth_controller;
 use App\Http\Controllers\Admmin_dashboard_controller;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Common_controller;
+use App\Http\Controllers\Main_controller;
 use App\Http\Controllers\Product_controller;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,9 +22,12 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('index');
+
+Route::controller(Main_controller::class)->group(function () {
+    Route::get('/', 'index')->name('main.index');
+    
+});
+
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
@@ -44,6 +48,8 @@ Route::controller(Admmin_dashboard_controller::class)->group(function () {
     Route::get('admin-dashboard', 'admin_dashboard')->name('admin.dashboard')->middleware(['auth','check_admin']);
     Route::get('admin-settings', 'admin_settings')->name('admin.settings')->middleware(['auth','check_admin']);
     Route::post('admin-settings/save-store-info', 'save_store_info')->name('save_store_info')->middleware(['auth','check_admin']);
+    Route::post('admin-settings/save-store-info-2', 'save_store_info_2')->name('save_store_info_2')->middleware(['auth','check_admin']);
+
 });
 
 Route::controller(CategoryController::class)->group(function () {

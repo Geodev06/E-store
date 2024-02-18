@@ -17,6 +17,11 @@ define('SYSTEM_LOGO',  'SYSTEM_LOGO');
 define('SYSTEM_BANNER',  'SYSTEM_BANNER');
 define('SYSTEM_NAME',  'SYSTEM_NAME');
 
+define('SYSTEM_EMAIL',  'SYSTEM_EMAIL');
+define('SYSTEM_CONTACT',  'SYSTEM_CONTACT');
+define('SYSTEM_ADDRESS',  'SYSTEM_ADDRESS');
+
+
 define('ENUM_YES',  'Y');
 define('ENUM_NO',  'N');
 

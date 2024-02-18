@@ -4,6 +4,8 @@
 
 @php
 $logo = DB::table('system_settings')->where('setting_name', 'SYSTEM_LOGO')->first();
+$sys_name = DB::table('system_settings')->where('setting_name', 'SYSTEM_NAME')->first();
+
 @endphp
 
 @if($logo)
@@ -14,5 +16,5 @@ $logo = DB::table('system_settings')->where('setting_name', 'SYSTEM_LOGO')->firs
 
 @endif
 <title>
-  {{ SYSTEM_TITLE }}
+  {{ $sys_name->value ?? '' }}
 </title>

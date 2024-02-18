@@ -39,6 +39,7 @@
             max-width: 100%;
             max-height: 200px;
         }
+
         .saved_images {
             max-width: 100%;
             max-height: 200px;
@@ -63,48 +64,111 @@
             </script>
             @endif
             <div class="container-fluid">
-                <div class="col-12 my-2">
-                    <div class="card shadow-xs border mb-4 pb-3">
-                        <div class="card-header pb-0 p-3">
-                            <h6 class="mb-0 font-weight-semibold text-lg">System information</h6>
-                            <p class="text-sm mb-1">Here you will find setting for your store.</p>
+                <div class="row">
+
+
+                    <div class="col-lg-12 ">
+                        <div class="col-12 my-2">
+                            <div class="card shadow-xs border mb-4 pb-3">
+                                <div class="card-header pb-0 p-3">
+                                    <h6 class="mb-0 font-weight-semibold text-lg">System information</h6>
+                                    <p class="text-sm mb-1">Here you will find setting for your store.</p>
+                                </div>
+                                <div class="card-body p-3">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <form role="form" id="sign_in_form" enctype="multipart/form-data" action="{{ route('save_store_info_2') }}" method="post">
+                                                <div class="row">
+                                                    @csrf
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label>Store Email</label>
+                                                            <input type="email" class="form-control" name="system_email" placeholder="Enter the name email" aria-label="System Email" value="{{ $settings['sys_email'] ?? '' }}">
+                                                            @error('system_email')
+                                                            <label for="" class="label_error"> {{ $message }} </label>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label>Store Contact #</label>
+                                                            <input type="text" class="form-control" name="system_contact" placeholder="Enter the name contact" aria-label="System Contact #" value="{{ $settings['sys_contact'] ?? '' }}">
+                                                            @error('system_contact')
+                                                            <label for="" class="label_error"> {{ $message }} </label>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label>Store Address</label>
+                                                            <input type="text" class="form-control" name="system_address" placeholder="Enter the address" aria-label="Store address" value="{{ $settings['sys_address'] ?? '' }}">
+                                                            @error('system_address')
+                                                            <label for="" class="label_error"> {{ $message }} </label>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div>
+                                                    <button type="submit" class="btn btn-dark  mt-4 mb-3" id="btn-save">Save</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body p-3">
-                            <div class="row">
-                                <form role="form" id="sign_in_form" enctype="multipart/form-data" action="{{ route('save_store_info') }}" method="post">
-                                    @csrf
-                                    <div class="mb-3">
-                                        <label>Store Name</label>
-                                        <input type="text" class="form-control" name="system_name" placeholder="Enter the name of your store" aria-label="System name" value="{{ $settings['sys_name'] }}">
-                                        @error('system_name')
-                                        <label for="" class="label_error"> {{ $message }} </label>
-                                        @enderror
+                    </div>
+
+                    <div class="col-12 my-2 mb-3">
+                        <div class="card shadow-xs border mb-4 pb-3">
+                            <div class="card-header pb-0 p-3">
+                                <section class="system-images-section">
+                                    <h6 class="section-title">System Images</h6>
+                                    <p class="section-description">Explore settings for your store.</p>
+                                </section>
+                            </div>
+                            <div class="card-body p-3">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <form role="form" id="sign_in_form" enctype="multipart/form-data" action="{{ route('save_store_info') }}" method="post">
+                                            @csrf
+                                            <div class="mb-3">
+                                                <label>Store Name</label>
+                                                <input type="text" class="form-control" name="system_name" placeholder="Enter the name of your store" aria-label="System name" value="{{ $settings['sys_name'] ?? '' }}">
+                                                @error('system_name')
+                                                <label for="" class="label_error"> {{ $message }} </label>
+                                                @enderror
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label>Store Logo</label>
+                                                <input type="file" class="form-control" name="sys_logo" id="sys_logo-input" accept=".jpg, .jpeg, .png">
+                                                <div id="sys_logo-preview"></div>
+
+                                                @if($settings['sys_logo'])
+                                                <img src="{{ asset($settings['sys_logo']) ?? ''  }}" alt="" srcset="" class="saved_images">
+                                                @endif
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label>Store Banner Image</label>
+                                                <input type="file" class="form-control" name="store_banner" id="banner-input" accept=".jpg, .jpeg, .png">
+                                                <div id="banner-preview"></div>
+
+                                                @if($settings['sys_banner'])
+                                                <img src="{{ asset($settings['sys_banner']) ?? '' }}" alt="" srcset="" class="saved_images">
+                                                @endif
+                                            </div>
+
+                                            <div>
+                                                <button type="submit" class="btn btn-dark  mt-4 mb-3" id="btn-signin">Save</button>
+                                            </div>
+                                        </form>
                                     </div>
-
-                                    <div class="mb-3">
-                                        <label>Store Logo</label>
-                                        <input type="file" class="form-control" name="sys_logo" id="sys_logo-input" accept=".jpg, .jpeg, .png" >
-                                        <div id="sys_logo-preview"></div>
-
-                                        @if($settings['sys_logo'])
-                                        <img src="{{ asset($settings['sys_logo']) }}" alt="" srcset="" class="saved_images">
-                                        @endif
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label>Store Banner Image</label>
-                                        <input type="file" class="form-control" name="store_banner" id="banner-input" accept=".jpg, .jpeg, .png">
-                                        <div id="banner-preview"></div>
-
-                                        @if($settings['sys_banner'])
-                                        <img src="{{ asset($settings['sys_banner']) }}" alt="" srcset="" class="saved_images">
-                                        @endif
-                                    </div>
-
-                                    <div>
-                                        <button type="submit" class="btn btn-dark  mt-4 mb-3" id="btn-signin">Save</button>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>

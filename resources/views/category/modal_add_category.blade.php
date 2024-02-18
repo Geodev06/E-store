@@ -16,7 +16,7 @@
                       </div>
                       <div class="mb-3">
                           <label>Description</label>
-                          <textarea placeholder="Enter your description" cols="52" rows="4" name="category_description"></textarea>
+                          <textarea placeholder="Enter your description" cols="52" rows="4" name="category_description"class="textarea-x"></textarea>
                           <span class="label_error error_category_description "></span>
                       </div>
                       <button type="submit" class="btn btn-dark mt-4 mb-3 float-end" id="btn-save">Save</button>

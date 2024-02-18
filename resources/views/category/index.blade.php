@@ -37,6 +37,14 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
+        .textarea-x {
+            width: 100%;
+            min-height: 100px;
+            /* Set a minimum height */
+            resize: vertical;
+            /* Allow vertical resizing only */
+        }
     </style>
 
     @include('partials.datatables')
@@ -225,8 +233,8 @@
         });
 
         $('#btn-delete-category').click(function(e) {
-         
-           var delete_id = $('#delete_id').val()
+
+            var delete_id = $('#delete_id').val()
             var delete_link = "{{ route('category.delete',':id') }}"
             deleteRequest(delete_link.replace(':id', delete_id), function(response) {
                 // console.log(response)
