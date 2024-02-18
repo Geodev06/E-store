@@ -5,14 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\System_settings;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Validator;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
 
 class Main_controller extends Controller
 {
-    public function index()
-    {
-        $categories = Category::all();
 
+    private function get_settings()
+    {
         $sys_name = System_settings::where('setting_name', SYSTEM_NAME)->first();
         $sys_logo = System_settings::where('setting_name', SYSTEM_LOGO)->first();
         $sys_banner = System_settings::where('setting_name', SYSTEM_BANNER)->first();
@@ -31,6 +34,16 @@ class Main_controller extends Controller
             'sys_address' => $sys_address->value ?? '',
         ];
 
+        return $settings;
+    }
+
+    public function index()
+    {
+        $categories = Category::all();
+
+
+        $settings = $this->get_settings();
+
         $products = Product::where('active_flag', ENUM_YES)->get();
 
         foreach ($products as $product) {
@@ -39,12 +52,59 @@ class Main_controller extends Controller
             // Retrieve categories associated with the product
             $p_categories = Category::whereIn('id', $categoryIds)->pluck('category')->toArray();
 
-            $p_categories = implode(" ",$p_categories);
-      
+            $p_categories = implode(" ", $p_categories);
+
             // Assign the categories array to the product
             $product->categories = $p_categories;
         }
 
-        return view('main.index', compact('categories', 'settings','products'));
+        return view('main.index', compact('categories', 'settings', 'products'));
+    }
+
+    public function login()
+    {
+        $settings = $this->get_settings();
+
+        return view('main.login', compact('settings'));
+    }
+
+    public function user_store(Request $request)
+    {
+
+        // Define validation rules
+        $rules = [
+            'name' => 'required|string|min:3',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8',
+        ];
+
+        // Run validation
+        $validator = Validator::make($request->all(), $rules);
+
+        // Check if validation fails
+        if ($validator->fails()) {
+            // Return validation errors in JSON format
+            return response()->json(['errors' => $validator->errors(), 'status' => 400], 201);
+        }
+
+
+        $data = $request->except('_token');
+        $data['type'] = 'C';
+
+        // Create the user
+        $user = User::create($data);
+
+        // Trigger the Registered event
+        event(new Registered($user));
+
+        // Automatically log in the user
+        Auth::login($user);
+
+        // Return a JSON response with a success message and the redirection URL
+        return response()->json([
+            'message' => $user->name . ' ' . SUCCESS_MSG,
+            'status' => 200,
+            'redirect' => route('verification.notice')
+        ], 200);
     }
 }

@@ -25,14 +25,24 @@ use Illuminate\Support\Facades\Auth;
 
 Route::controller(Main_controller::class)->group(function () {
     Route::get('/', 'index')->name('main.index');
-    
+    Route::get('login', 'login')->name('main.login');
+
+
+    /**
+     * Authentication routes
+     */
+    Route::post('user-store', 'user_store')->name('user.store'); 
 });
 
 
+Route::get('/email/verify', function () {
+    return view('main_partials.verify-email');
+})->middleware('auth')->name('verification.notice');
+
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
-    return redirect()->route('admin.login');
-})->name('verification.verify');
+    return redirect('/');
+})->middleware(['auth', 'signed'])->name('verification.verify');
 
 
 Route::controller(Admin_auth_controller::class)->group(function () {
