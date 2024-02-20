@@ -39,34 +39,52 @@ class Main_controller extends Controller
 
     public function index()
     {
+        list($categories, $settings, $products) = $this->getCategoriesSettingsAndProducts();
+        return view('main.index', compact('categories', 'settings', 'products'));
+    }
+
+    public function contact()
+    {
+        list($categories, $settings, $products) = $this->getCategoriesSettingsAndProducts();
+        return view('main.contact', compact('categories', 'settings', 'products'));
+    }
+
+    public function shop()
+    {
+        list($categories, $settings, $products) = $this->getCategoriesSettingsAndProducts();
+        return view('main.shop', compact('categories', 'settings', 'products'));
+    }
+
+    private function getCategoriesSettingsAndProducts()
+    {
         $categories = Category::all();
-
-
         $settings = $this->get_settings();
-
         $products = Product::where('active_flag', ENUM_YES)->get();
 
         foreach ($products as $product) {
             $categoryIds = explode(",", $product->category_ids);
-
             // Retrieve categories associated with the product
             $p_categories = Category::whereIn('id', $categoryIds)->pluck('category')->toArray();
-
             $p_categories = implode(" ", $p_categories);
-
             // Assign the categories array to the product
             $product->categories = $p_categories;
         }
 
-        return view('main.index', compact('categories', 'settings', 'products'));
+        return [$categories, $settings, $products];
     }
+
 
     public function login()
     {
+
+        if (Auth::check()) {
+            return redirect()->route('main.index');
+        }
         $settings = $this->get_settings();
 
         return view('main.login', compact('settings'));
     }
+
 
     public function user_store(Request $request)
     {
@@ -106,5 +124,25 @@ class Main_controller extends Controller
             'status' => 200,
             'redirect' => route('verification.notice')
         ], 200);
+    }
+
+    public function auth(Request $request)
+    {
+
+        // Your authentication logic
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials, $request->has('remember'))) {
+
+            $user = Auth::user();
+
+            if (!$user->email_verified_at) {
+
+                return response()->json(['message' => EMAIL_NOTIF_SEND, 'email_sent' => 'ok', 'status' => 201], 200);
+            }
+
+            return response()->json(['status' => 200], 200);
+        }
+        return response()->json(SIGN_IN_ERR, 401);
     }
 }

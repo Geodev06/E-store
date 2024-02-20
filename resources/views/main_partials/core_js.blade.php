@@ -1,5 +1,5 @@
    <!-- Js Plugins -->
-   <script src="{{ asset('main/js/jquery-3.3.1.min.js') }}"></script>
+
     <script src="{{ asset('main/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('main/js/jquery.nice-select.min.js') }}"></script>
     <script src="{{ asset('main/js/jquery-ui.min.js') }}"></script>

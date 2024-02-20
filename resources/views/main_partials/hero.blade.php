@@ -1,4 +1,4 @@
-<section class="hero">
+<section class="hero" style="margin-bottom: -100px;">
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
@@ -7,7 +7,7 @@
                         <i class="fa fa-bars"></i>
                         <span>All departments</span>
                     </div>
-                    <ul>
+                    <ul @if(request()->route()->getName() != 'main.index' ) style="display: none;" @endif>
                         @forelse($categories as $category)
                         <li><a href="#">{{ $category->category }}</a></li>
                         @empty
@@ -38,6 +38,8 @@
                         </div>
                     </div>
                 </div>
+
+                @if(request()->route()->getName() == 'main.index' )
                 <div class="hero__item set-bg" data-setbg="{{$settings['sys_banner']}}">
                     <div class="hero__text">
                         <span>LOREM IPSUM</span>
@@ -46,6 +48,8 @@
                         <a href="#" class="primary-btn">SHOP NOW</a>
                     </div>
                 </div>
+
+                @endif
             </div>
         </div>
     </div>

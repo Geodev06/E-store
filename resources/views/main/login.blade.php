@@ -312,26 +312,24 @@
                     <input type="password" placeholder="Password" name="password" />
 
                 </div>
-                <button type="submit">Sign Up</button>
+                <button type="submit" id="btn-submit">Sign Up</button>
             </form>
         </div>
 
 
 
         <div class="form-container sign-in-container">
-            <form action="#" method="post">
+            <form action="#" method="post" id="form_signin">
                 <h1>Sign in</h1>
                 @csrf
                 <div class="social-container">
                     <a href="#" class="social"><i class="fa-brands fa-google"></i></i></a>
-                    <!-- <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a> -->
                 </div>
                 <span>or use your account</span>
-                <input type="email" placeholder="Email" />
-                <input type="password" placeholder="Password" />
+                <input type="email" placeholder="Email" name="email" />
+                <input type="password" placeholder="Password" name="password" />
                 <a href="#">Forgot your password?</a>
-                <button>Sign In</button>
+                <button type="submit" id="btn-signin">Sign In</button>
             </form>
         </div>
 
@@ -422,7 +420,6 @@
             })
         }
     </script>
-
     <script>
         const signUpButton = document.getElementById('signUp');
         const signInButton = document.getElementById('signIn');
@@ -449,6 +446,10 @@
                     type: "POST",
                     url: url,
                     data: formData,
+                    beforeSend: function() {
+                        $('#form_signup :input').prop('disabled', true);
+                        $('#btn-submit').text('Signing Up...')
+                    },
                     success: function(response) {
                         if (response.status == 400) {
                             $.each(response.errors, function(field, message) {
@@ -459,14 +460,58 @@
 
                         if (response.status == 200) {
                             showToast(response.message, 1)
-                            setTimeout(function() {
-                                window.location.assign(response.redirect)
-                            }, 300)
+                            $('#form_signup input[type="email"], #form_signup input[type="password"], #form_signup input[type="text"]').val('');
                         }
+                        $('#btn-submit').text('Sign Up')
+                        $('#form_signup :input').prop('disabled', false);
+
                     },
                     error: function(xhr, status, error) {
-                        // Handle error response
-                        console.error(xhr.responseText);
+                        showToast(error, 2)
+
+                        $('#btn-submit').text('Sign Up')
+                        $('#form_signup :input').prop('disabled', false);
+
+
+                    }
+                });
+
+            })
+
+            $('#form_signin').on('submit', function(e) {
+                e.preventDefault()
+                var formData = $(this).serialize();
+
+                const url = "{{ route('user.auth') }}"
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: formData,
+                    beforeSend: function() {
+                        $('#form_signin :input').prop('disabled', true);
+                        $('#btn-signin').text('Signing In...')
+                    },
+                    success: function(response) {
+
+                        if (response.status == 201) {
+                            showToast(response.message, 1)
+                            $('#form_signin input[type="email"], #form_signin input[type="password"], #form_signin input[type="text"]').val('');
+                        }
+                        if (response.status == 200) {
+                            window.location.assign("/")
+                        }
+                        $('#btn-signin').text('Sign In')
+                        $('#form_signin :input').prop('disabled', false);
+
+                    },
+                    error: function(xhr, status, error) {
+                        showToast(xhr.responseJSON, 2)
+
+                        $('#btn-signin').text('Sign Up')
+                        $('#form_signin :input').prop('disabled', false);
+
+
                     }
                 });
 
