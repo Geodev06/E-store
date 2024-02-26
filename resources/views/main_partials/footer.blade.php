@@ -6,7 +6,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__about__logo">
-                            <a href="{{ route('main.index') }}"><img src="{{ $settings['sys_logo'] }}" alt=""></a>
+                            <a href="{{ route('main.index') }}"><img src="{{ asset($settings['sys_logo']) }}" alt=""></a>
                         </div>
                         <ul>
                             <li>Address: {{ $settings['sys_address'] }}</li>
@@ -63,7 +63,7 @@
                                 </script> All rights reserved | {{ $settings['sys_name']}}
                                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                         </div>
-                        <div class="footer__copyright__payment"><img src="img/payment-item.png" alt=""></div>
+                        <!-- <div class="footer__copyright__payment"><img src="img/payment-item.png" alt=""></div> -->
                     </div>
                 </div>
             </div>

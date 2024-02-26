@@ -57,110 +57,34 @@
                         <div class="section-title product__discount__title">
                             <h2>Latest</h2>
                         </div>
-                        <div class="row">
+                        <div class="row discounted_product_section">
                             <div class="product__discount__slider owl-carousel">
+                                @forelse($products as $p)
                                 <div class="col-lg-4">
                                     <div class="product__discount__item">
-                                        <div class="product__discount__item__pic set-bg" data-setbg="img/product/discount/pd-1.jpg">
+                                        <div class="product__discount__item__pic set-bg" data-setbg="{{ $p->photo}}">
                                             <div class="product__discount__percent">-20%</div>
                                             <ul class="product__item__pic__hover">
+                                                <li><a href="{{ route('main.details', encrypt($p->id)) }}"><i class="fa fa-book"></i></a></li>
+
+                                                @if(Auth::check())
                                                 <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                                 <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-shopping-cart add_to_cart" data-id="{{ $p->id }}"></i></a></li>
+                                                @endif
                                             </ul>
                                         </div>
                                         <div class="product__discount__item__text">
-                                            <span>Dried Fruit</span>
-                                            <h5><a href="#">Raisin’n’nuts</a></h5>
-                                            <div class="product__item__price">$30.00 <span>$36.00</span></div>
+                                            <span></span>
+                                            <h6><a href="#">{{ $p->name}}</a></h6>
+                                            <h5>&#8369; {{ number_format($p->price, 2) }}</h5>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
-                                    <div class="product__discount__item">
-                                        <div class="product__discount__item__pic set-bg" data-setbg="img/product/discount/pd-2.jpg">
-                                            <div class="product__discount__percent">-20%</div>
-                                            <ul class="product__item__pic__hover">
-                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product__discount__item__text">
-                                            <span>Vegetables</span>
-                                            <h5><a href="#">Vegetables’package</a></h5>
-                                            <div class="product__item__price">$30.00 <span>$36.00</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="product__discount__item">
-                                        <div class="product__discount__item__pic set-bg" data-setbg="img/product/discount/pd-3.jpg">
-                                            <div class="product__discount__percent">-20%</div>
-                                            <ul class="product__item__pic__hover">
-                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product__discount__item__text">
-                                            <span>Dried Fruit</span>
-                                            <h5><a href="#">Mixed Fruitss</a></h5>
-                                            <div class="product__item__price">$30.00 <span>$36.00</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="product__discount__item">
-                                        <div class="product__discount__item__pic set-bg" data-setbg="img/product/discount/pd-4.jpg">
-                                            <div class="product__discount__percent">-20%</div>
-                                            <ul class="product__item__pic__hover">
-                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product__discount__item__text">
-                                            <span>Dried Fruit</span>
-                                            <h5><a href="#">Raisin’n’nuts</a></h5>
-                                            <div class="product__item__price">$30.00 <span>$36.00</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="product__discount__item">
-                                        <div class="product__discount__item__pic set-bg" data-setbg="img/product/discount/pd-5.jpg">
-                                            <div class="product__discount__percent">-20%</div>
-                                            <ul class="product__item__pic__hover">
-                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product__discount__item__text">
-                                            <span>Dried Fruit</span>
-                                            <h5><a href="#">Raisin’n’nuts</a></h5>
-                                            <div class="product__item__price">$30.00 <span>$36.00</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="product__discount__item">
-                                        <div class="product__discount__item__pic set-bg" data-setbg="img/product/discount/pd-6.jpg">
-                                            <div class="product__discount__percent">-20%</div>
-                                            <ul class="product__item__pic__hover">
-                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product__discount__item__text">
-                                            <span>Dried Fruit</span>
-                                            <h5><a href="#">Raisin’n’nuts</a></h5>
-                                            <div class="product__item__price">$30.00 <span>$36.00</span></div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @empty
+
+                                @endforelse
+
                             </div>
                         </div>
                     </div>
@@ -177,7 +101,7 @@
                             </div>
                             <div class="col-lg-4 col-md-4">
                                 <div class="filter__found">
-                                    <h6><span>16</span> Products found</h6>
+                                    <h6><span>{{ count($products)}}</span> Products found</h6>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-3">
@@ -188,15 +112,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row product-section">
                         @forelse($products as $p)
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
                                 <div class="product__item__pic set-bg" data-setbg="{{ $p->photo}}">
                                     <ul class="product__item__pic__hover">
+                                        <li><a href="{{ route('main.details', encrypt($p->id)) }}"><i class="fa fa-book"></i></a></li>
+
+                                        @if(Auth::check())
                                         <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                         <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-shopping-cart add_to_cart" data-id="{{ $p->id }}"></i></a></li>
+                                        @endif
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
@@ -224,6 +152,24 @@
         </div>
     </section>
     <!-- Product Section End -->
+
+    <script>
+        $('.product-section .product__item').on('click', '.add_to_cart', function(e) {
+            e.preventDefault()
+            var product_id = $(this)[0].dataset.id
+            addToStash(product_id)
+            get_stash_count()
+
+        })
+
+        $('.discounted_product_section .product__discount__item').on('click', '.add_to_cart', function(e) {
+            e.preventDefault()
+            var product_id = $(this)[0].dataset.id
+            addToStash(product_id)
+            get_stash_count()
+
+        })
+    </script>
 
 
 

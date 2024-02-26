@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Common_controller;
 use App\Http\Controllers\Main_controller;
 use App\Http\Controllers\Product_controller;
+use App\Http\Controllers\StashController;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -28,7 +29,8 @@ Route::controller(Main_controller::class)->group(function () {
     Route::get('login', 'login')->name('main.login');
     Route::get('contact', 'contact')->name('main.contact');
     Route::get('shop', 'shop')->name('main.shop');
-
+    Route::get('my-cart', 'cart')->name('main.cart');
+    Route::get('product-details/{id}', 'product_detail')->name('main.details');
 
 
 
@@ -38,6 +40,15 @@ Route::controller(Main_controller::class)->group(function () {
     Route::post('user-store', 'user_store')->name('user.store');
     Route::post('user-auth', 'auth')->name('user.auth');
 });
+
+Route::controller(StashController::class)->group(function () {
+    Route::get('get-stash-count', 'get_item_count')->name('stash.get_count');
+    Route::post('add-item-to-stash/{product_id}', 'add_to_stash')->name('add_to_stash');
+    Route::post('remove-item-to-stash/{id}', 'remove_from_stash')->name('remove_from_stash');
+
+
+
+})->middleware('auth');
 
 
 Route::get('/email/verify', function () {

@@ -6,11 +6,87 @@
     @if(Auth::check())
     <div class="humberger__menu__cart">
         <ul>
-            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+            <li><a href="#"><i class="fa fa-heart"></i> <span>0</span></a></li>
+            <li><a href="{{ route('main.cart') }}"><i class="fa fa-shopping-bag"></i> <span class="item-count"></span></a></li>
         </ul>
-        <div class="header__cart__price">item: <span>&#8369; 00.00</span></div>
+        <div class="header__cart__price">item: <span>&#8369; <span class="item-total"></span></span></div>
     </div>
+
+
+
+    <script>
+        function get_stash_count() {
+            $.ajax({
+                type: "GET",
+                url: "{{ route('stash.get_count') }}",
+                data: {},
+                success: function(response) {
+                    if (response.status == 200) {
+                        $('.item-total').text(parseFloat(response.item_total).toFixed(2))
+                        $('.item-count').text(response.item_count)
+                    }
+                },
+                error: function(xhr, status, error) {
+                    showToast(xhr.responseJSON, 2)
+
+                }
+            });
+        }
+
+        get_stash_count()
+
+        function addToStash(product_id) {
+
+            var url = "{{ route('add_to_stash',':product_id') }}"
+
+            $.ajax({
+                type: "POST",
+                url: url.replace(':product_id', product_id),
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    product_id: product_id
+                },
+                success: function(response) {
+                    if (response.status == 200) {
+                        showToast(response.message, 1)
+                    }
+
+                    if (response.status == 305) {
+                        showToast(response.message, 3)
+
+                    }
+                },
+                error: function(xhr, status, error) {
+                    showToast(xhr.responseJSON, 2)
+
+                }
+            });
+        }
+
+        function removeFromStash(id) {
+
+            var url = "{{ route('remove_from_stash',':id') }}"
+
+            $.ajax({
+                type: "POST",
+                url: url.replace(':id', id),
+                data: {
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    if (response.status == 200) {
+                        $('#row_' + id).remove();
+                        showToast(response.message, 1);
+                    }
+
+                },
+                error: function(xhr, status, error) {
+                    showToast(xhr.responseJSON, 2)
+
+                }
+            });
+        }
+    </script>
     @endif
     <div class="humberger__menu__widget">
         @if(!Auth::check())
@@ -65,10 +141,9 @@
             <li class="active"><a href="{{ route('main.index') }}">Home</a></li>
             <li class="{{ request()->route()->getName() == 'main.shop' ? 'active' : '' }}"><a href="{{ route('main.shop') }}">Shop</a></li>
             @if(Auth::check())
-            <li >Cart</a>
+            <li>Cart</a>
                 <ul class="header__menu__dropdown">
-                    <li><a href="#">Shop Details</a></li>
-                    <li><a href="#">Shoping Cart</a></li>
+                    <li><a href="{{ route('main.cart') }}">Shoping Cart</a></li>
                     <li><a href="#">Check Out</a></li>
                 </ul>
             </li>

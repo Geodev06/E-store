@@ -9,6 +9,9 @@
 <link rel="stylesheet" href="{{ asset('main/css/owl.carousel.min.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('main/css/slicknav.min.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('main/css/style.css') }}" type="text/css">
+
+<link rel="stylesheet" href="{{ asset('iztoast/css/iziToast.min.css') }}">
+<script src="{{ asset('iztoast/js/iziToast.min.js') }}"></script>
 <script>
     function showToast(msg, type) {
 

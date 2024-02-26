@@ -74,7 +74,7 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class="header__logo">
-                    <a href="{{ route('main.index') }}"><img src="{{ $settings['sys_logo'] }}" alt=""></a>
+                    <a href="{{ route('main.index') }}"><img src="{{ asset($settings['sys_logo']) }}" alt=""></a>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -83,13 +83,14 @@
                         <li class="{{ request()->route()->getName() == 'main.index' ? 'active' : '' }}"><a href="{{ route('main.index') }}">Home</a></li>
                         <li class="{{ request()->route()->getName() == 'main.shop' ? 'active' : '' }}"><a href="{{ route('main.shop') }}">Shop</a></li>
                         @if(Auth::check())
-                        <li ><a href="#">Cart</a>
+                        <li><a href="#">Cart</a>
                             <ul class="header__menu__dropdown">
-                                <li><a href="#">Shop Details</a></li>
-                                <li><a href="#">Shoping Cart</a></li>
+                                <li><a href="{{ route('main.cart') }}">Shoping Cart</a></li>
+
                                 <li><a href="#">Check Out</a></li>
                             </ul>
                         </li>
+
                         @endif
                         <li class="{{ request()->route()->getName() == 'main.contact' ? 'active' : '' }}"><a href="{{ route('main.contact') }}">Contact</a></li>
                     </ul>
@@ -99,12 +100,13 @@
             <div class="col-lg-3">
                 <div class="header__cart">
                     <ul>
-                        <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                        <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                        <li><a href="#"><i class="fa fa-heart"></i> <span>0</span></a></li>
+                        <li><a href="{{ route('main.cart') }}"><i class="fa fa-shopping-bag"></i> <span class="item-count">0</span></a></li>
                     </ul>
-                    <div class="header__cart__price">item: <span>&#8369; 00.00</span></div>
+                    <div class="header__cart__price">item: <span>&#8369; <span class="item-total"></span></span></div>
                 </div>
             </div>
+
             @endif
         </div>
         <div class="humberger__open">

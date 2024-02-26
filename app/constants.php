@@ -25,6 +25,10 @@ define('SYSTEM_ADDRESS',  'SYSTEM_ADDRESS');
 define('ENUM_YES',  'Y');
 define('ENUM_NO',  'N');
 
+define('ITEM_ADDED_TO_CART',  'has been successfully added to your cart!');
+define('ITEM_REMOVE',  'has been successfully removed from your cart!');
+
+define('ALREADY_ADDED',  'is already added in your cart!');
 
 
 

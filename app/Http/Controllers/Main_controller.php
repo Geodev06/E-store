@@ -6,10 +6,12 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\System_settings;
 use App\Models\User;
+use App\Models\User_stash;
 use Illuminate\Http\Request;
 use Validator;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Main_controller extends Controller
 {
@@ -53,6 +55,47 @@ class Main_controller extends Controller
     {
         list($categories, $settings, $products) = $this->getCategoriesSettingsAndProducts();
         return view('main.shop', compact('categories', 'settings', 'products'));
+    }
+
+    public function cart()
+    {
+        list($categories, $settings, $products) = $this->getCategoriesSettingsAndProducts();
+
+        $items_in_stash = DB::table('user_stashes as A')
+            ->select('B.name', 'B.photo', 'A.product_id', 'A.price', 'A.qty', 'A.id', 'A.created_at')
+            ->join('products as B', 'B.id', '=', 'A.product_id')
+            ->where('A.user_id', Auth::user()->id)
+
+            ->orderBy('A.created_at', 'desc') // Order by A.created_at column in descending order
+            ->get();
+
+        // $total = User_stash::where('user_id', Auth::user()->id)->sum('price');
+
+        return view('main.cart', compact('categories', 'settings', 'products', 'items_in_stash'));
+    }
+
+    public function product_detail($id)
+    {
+        $id = decrypt($id);
+
+        $result = DB::select("
+                            SELECT
+                                A.*,
+                                (
+                                    SELECT
+                                        GROUP_CONCAT(category)
+                                    FROM
+                                        categories
+                                    WHERE
+                                        FIND_IN_SET(categories.id, A.category_ids) > 0
+                                ) AS categories
+                            FROM
+                                products A where A.id = " . $id . " LIMIT 1
+                        ");
+
+        list($categories, $settings, $products) = $this->getCategoriesSettingsAndProducts();
+        
+        return view('main.details', compact('categories', 'settings', 'products', 'result'));
     }
 
     private function getCategoriesSettingsAndProducts()

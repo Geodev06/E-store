@@ -26,11 +26,15 @@
              @forelse($products as $product)
              <div class="col-lg-3 col-md-4 col-sm-6 mix {{ $product->categories }}">
                  <div class="featured__item">
-                     <div class="featured__item__pic set-bg" data-setbg="{{asset($product->photo)}}">
+                     <div class="featured__item__pic set-bg" data-setbg="{{ asset($product->photo) }}">
                          <ul class="featured__item__pic__hover">
+                             <li><a href="{{ route('main.details', encrypt($product->id)) }}"><i class="fa fa-book"></i></a></li>
+
+                             @if(Auth::check())
                              <li><a href="#"><i class="fa fa-heart"></i></a></li>
                              <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                             <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                             <li><a href="#"><i class="fa fa-shopping-cart add_to_cart" data-id="{{ $product->id}}"></i></a></li>
+                             @endif
                          </ul>
                      </div>
                      <div class="featured__item__text">
@@ -40,14 +44,24 @@
                  </div>
              </div>
              @empty
-            <div class="col-lg-12">
-            <div class="text-center">
-                 <p class="mx-3">No product available.</p>
+             <div class="col-lg-12">
+                 <div class="text-center">
+                     <p class="mx-3">No product available.</p>
+                 </div>
              </div>
-            </div>
              @endforelse
 
          </div>
      </div>
  </section>
  <!-- Featured Section End -->
+
+ <script>
+     $('.featured__filter .featured__item').on('click', '.add_to_cart', function(e) {
+         e.preventDefault()
+         var product_id = $(this)[0].dataset.id
+         addToStash(product_id)
+         get_stash_count()
+
+     })
+ </script>
