@@ -33,7 +33,11 @@
                              @if(Auth::check())
                              <li><a href="#"><i class="fa fa-heart"></i></a></li>
                              <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                             <li><a href="#"><i class="fa fa-shopping-cart add_to_cart" data-id="{{ $product->id}}"></i></a></li>
+
+                             @if(!in_array($product->id,$customer_book_ids))
+                             <li><a href="#"><i class="fa fa-shopping-cart add_to_cart" data-id="{{ $product->id }}"></i></a></li>
+                             @endif
+
                              @endif
                          </ul>
                      </div>

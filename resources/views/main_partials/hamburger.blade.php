@@ -24,6 +24,8 @@
                     if (response.status == 200) {
                         $('.item-total').text(parseFloat(response.item_total).toFixed(2))
                         $('.item-count').text(response.item_count)
+                        $('#amount').val(parseFloat(response.item_total).toFixed(2))
+
                     }
                 },
                 error: function(xhr, status, error) {

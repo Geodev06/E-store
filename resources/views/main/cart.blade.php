@@ -119,17 +119,39 @@
                         </div>
                     </div>
                 </div>
+                @if(count($items_in_stash) > 0)
                 <div class="col-lg-6">
                     <div class="shoping__checkout">
                         <h5>Cart Total</h5>
                         <ul>
                             <li>Total <span>&#8369; <span class="item-total"></span> </span></li>
                         </ul>
-                        <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
+                        <form action="{{ route('paypal.pay') }}" method="post" id="form-pay">
+                            @csrf
+
+                            @forelse($items_in_stash as $p)
+                            <input type="hidden" name="products[]" value="{{$p->product_id}}">
+                            <input type="hidden" name="order_id[]" value="{{$p->id}}">
+                            @empty
+                            <input type="hidden" name="amount" value="0.00">
+
+                            @endforelse
+
+
+
+                            <a href="#" class="primary-btn" id="btn-checkout">PROCEED TO CHECKOUT</a>
+                        </form>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
+
+        @if(Session::has('success_payment'))
+        <script>
+            showToast("{{ Session::get('success_payment') }}", 1)
+        </script>
+        @endif
     </section>
     <!-- Shoping Cart Section End -->
     <script>
@@ -138,6 +160,14 @@
             removeFromStash(id)
             get_stash_count()
 
+        })
+        $('#btn-checkout').on('click', function(e) {
+            e.preventDefault()
+            if ($('#amount').val() <= 0) {
+                showToast('Your cart is empty. cannot proceed', 2)
+                return
+            }
+            $('#form-pay').submit()
         })
     </script>
 

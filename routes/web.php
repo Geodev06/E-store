@@ -5,8 +5,10 @@ use App\Http\Controllers\Admmin_dashboard_controller;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Common_controller;
 use App\Http\Controllers\Main_controller;
+use App\Http\Controllers\PaypalController;
 use App\Http\Controllers\Product_controller;
 use App\Http\Controllers\StashController;
+use App\Http\Controllers\StripeController;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -32,14 +34,13 @@ Route::controller(Main_controller::class)->group(function () {
     Route::get('my-cart', 'cart')->name('main.cart');
     Route::get('product-details/{id}', 'product_detail')->name('main.details');
 
-
-
     /**
      * Authentication routes
      */
     Route::post('user-store', 'user_store')->name('user.store');
     Route::post('user-auth', 'auth')->name('user.auth');
 });
+
 
 Route::controller(StashController::class)->group(function () {
     Route::get('get-stash-count', 'get_item_count')->name('stash.get_count');
@@ -92,8 +93,12 @@ Route::controller(Product_controller::class)->group(function () {
     Route::delete('product-item-delete/{id}', 'delete')->name('product.delete')->middleware(['auth', 'check_admin']);
 });
 
+Route::controller(StripeController::class)->group(function () {
 
+    Route::post('session', 'session')->name('paypal.pay');
+    Route::get('success/{data}', 'success')->name('success');
 
+});
 
 Route::post('logout',  function () {
 

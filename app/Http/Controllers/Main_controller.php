@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\CustomerBook;
 use App\Models\Product;
 use App\Models\System_settings;
 use App\Models\User;
@@ -41,8 +42,8 @@ class Main_controller extends Controller
 
     public function index()
     {
-        list($categories, $settings, $products) = $this->getCategoriesSettingsAndProducts();
-        return view('main.index', compact('categories', 'settings', 'products'));
+        list($categories, $settings, $products, $customer_book_ids) = $this->getCategoriesSettingsAndProducts();
+        return view('main.index', compact('categories', 'settings', 'products', 'customer_book_ids'));
     }
 
     public function contact()
@@ -53,9 +54,10 @@ class Main_controller extends Controller
 
     public function shop()
     {
-        list($categories, $settings, $products) = $this->getCategoriesSettingsAndProducts();
+        list($categories, $settings, $products, $customer_book_ids) = $this->getCategoriesSettingsAndProducts();
 
-        return view('main.shop', compact('categories', 'settings', 'products'));
+
+        return view('main.shop', compact('categories', 'settings', 'products', 'customer_book_ids'));
     }
 
     public function cart()
@@ -114,7 +116,12 @@ class Main_controller extends Controller
             $product->categories = $p_categories;
         }
 
-        return [$categories, $settings, $products];
+        $customer_book_ids = CustomerBook::where('user_id', Auth::user()->id)
+            ->pluck('product_id')
+            ->values()
+            ->toArray();
+
+        return [$categories, $settings, $products, $customer_book_ids];
     }
 
 

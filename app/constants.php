@@ -30,6 +30,8 @@ define('ITEM_REMOVE',  'has been successfully removed from your cart!');
 
 define('ALREADY_ADDED',  'is already added in your cart!');
 
+define('SUCCESS_MSG_PAYMENT',  'Your Purchase is Complete!. Thank you');
+
 
 
 
