@@ -62,16 +62,17 @@ class Admin_auth_controller extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials, $request->has('remember'))) {
-            
+
             $user = Auth::user();
 
-            if(!$user->email_verified_at) {
+            if (!$user->email_verified_at) {
                 event(new Registered($user));
-                return response()->json(['msg'=>EMAIL_NOTIF_SEND,'email_sent'=>'ok']);
+
+                return response()->json(['msg' => EMAIL_NOTIF_SEND, 'email_sent' => 'ok']);
             }
-            
-            return response()->json(['sign_in_status'=>200 ],200);
+
+            return response()->json(['sign_in_status' => 200], 200);
         }
-        return response()->json(SIGN_IN_ERR,401);
+        return response()->json(SIGN_IN_ERR, 401);
     }
 }

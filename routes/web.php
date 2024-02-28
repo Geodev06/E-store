@@ -45,9 +45,6 @@ Route::controller(StashController::class)->group(function () {
     Route::get('get-stash-count', 'get_item_count')->name('stash.get_count');
     Route::post('add-item-to-stash/{product_id}', 'add_to_stash')->name('add_to_stash');
     Route::post('remove-item-to-stash/{id}', 'remove_from_stash')->name('remove_from_stash');
-
-
-
 })->middleware('auth');
 
 

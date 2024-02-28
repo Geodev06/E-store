@@ -70,8 +70,10 @@
                         <div class="product__details__price">&#8369; {{ number_format($result[0]->price, 2) ?? '0.00' }}</div>
                         <p>{{ $result[0]->categories ?? '' }}.</p>
 
+                        @if(Auth::check())
                         <a href="#" class="primary-btn" data-id="{{ $result[0]->id }}" id="btn-add-to-cart">ADD TO CARD</a>
                         <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
+                        @endif
                         <ul>
                             <li><b>Availability</b> <span>In Stock</span></li>
                             <li><b>Share on</b>

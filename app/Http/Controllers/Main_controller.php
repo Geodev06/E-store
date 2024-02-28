@@ -54,6 +54,7 @@ class Main_controller extends Controller
     public function shop()
     {
         list($categories, $settings, $products) = $this->getCategoriesSettingsAndProducts();
+
         return view('main.shop', compact('categories', 'settings', 'products'));
     }
 
@@ -94,7 +95,7 @@ class Main_controller extends Controller
                         ");
 
         list($categories, $settings, $products) = $this->getCategoriesSettingsAndProducts();
-        
+
         return view('main.details', compact('categories', 'settings', 'products', 'result'));
     }
 
@@ -156,10 +157,7 @@ class Main_controller extends Controller
         $user = User::create($data);
 
         // Trigger the Registered event
-        event(new Registered($user));
 
-        // Automatically log in the user
-        Auth::login($user);
 
         // Return a JSON response with a success message and the redirection URL
         return response()->json([
@@ -180,6 +178,8 @@ class Main_controller extends Controller
             $user = Auth::user();
 
             if (!$user->email_verified_at) {
+
+                event(new Registered(Auth::user()));
 
                 return response()->json(['message' => EMAIL_NOTIF_SEND, 'email_sent' => 'ok', 'status' => 201], 200);
             }

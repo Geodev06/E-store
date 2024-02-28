@@ -53,8 +53,8 @@ class Admmin_dashboard_controller extends Controller
         $sys_logo = System_settings::where('setting_name', SYSTEM_LOGO)->first();
         $sys_banner = System_settings::where('setting_name', SYSTEM_BANNER)->first();
 
-        $current_logo = public_path($sys_logo->value);
-        $current_banner = public_path($sys_banner->value);
+        $current_logo = public_path($sys_logo->value ?? '');
+        $current_banner = public_path($sys_banner->value ?? '');
 
         if ($request->hasFile('sys_logo')) {
 
